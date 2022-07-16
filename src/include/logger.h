@@ -37,13 +37,13 @@
 namespace newsql_kv {
 
 // https://blog.galowicz.de/2016/02/20/short_file_macro/
-    using cstr = const char *;
+using cstr = const char *;
 
-    static constexpr cstr PastLastSlash(cstr a, cstr b) {
-        return *a == '\0' ? b : *b == '/' ? PastLastSlash(a + 1, a + 1) : PastLastSlash(a + 1, b);
-    }
+static constexpr cstr PastLastSlash(cstr a, cstr b) {
+  return *a == '\0' ? b : *b == '/' ? PastLastSlash(a + 1, a + 1) : PastLastSlash(a + 1, b);
+}
 
-    static constexpr cstr PastLastSlash(cstr a) { return PastLastSlash(a, a); }
+static constexpr cstr PastLastSlash(cstr a) { return PastLastSlash(a, a); }
 
 #define __SHORT_FILE__                            \
   ({                                              \
@@ -52,13 +52,13 @@ namespace newsql_kv {
   })
 
 // Log levels.
-    static constexpr int LOG_LEVEL_OFF = 1000;
-    static constexpr int LOG_LEVEL_ERROR = 500;
-    static constexpr int LOG_LEVEL_WARN = 400;
-    static constexpr int LOG_LEVEL_INFO = 300;
-    static constexpr int LOG_LEVEL_DEBUG = 200;
-    static constexpr int LOG_LEVEL_TRACE = 100;
-    static constexpr int LOG_LEVEL_ALL = 0;
+static constexpr int LOG_LEVEL_OFF = 1000;
+static constexpr int LOG_LEVEL_ERROR = 500;
+static constexpr int LOG_LEVEL_WARN = 400;
+static constexpr int LOG_LEVEL_INFO = 300;
+static constexpr int LOG_LEVEL_DEBUG = 200;
+static constexpr int LOG_LEVEL_TRACE = 100;
+static constexpr int LOG_LEVEL_ALL = 0;
 
 #define LOG_LOG_TIME_FORMAT "%Y-%m-%d %H:%M:%S"
 #define LOG_OUTPUT_STREAM stdout
@@ -70,9 +70,9 @@ namespace newsql_kv {
 // given.")
 #ifndef NDEBUG
 // #pragma message("LOG_LEVEL_DEBUG is used instead as DEBUG option is on.")
-    static constexpr int LOG_LEVEL = LOG_LEVEL_DEBUG;
+static constexpr int LOG_LEVEL = LOG_LEVEL_DEBUG;
 #else
-    // #pragma message("LOG_LEVEL_WARN is used instead as DEBUG option is off.")
+// #pragma message("LOG_LEVEL_WARN is used instead as DEBUG option is off.")
 static constexpr int LOG_LEVEL = LOG_LEVEL_INFO;
 #endif
 // #pragma message("Give LOG_LEVEL compile option to overwrite the default
@@ -84,7 +84,7 @@ static constexpr int LOG_LEVEL = LOG_LEVEL_INFO;
 #define __FUNCTION__ ""
 #endif
 
-    void OutputLogHeader(const char *file, int line, const char *func, int level);
+void OutputLogHeader(const char *file, int line, const char *func, int level);
 
 // Two convenient macros for debugging
 // 1. Logging macros.
@@ -167,34 +167,34 @@ static constexpr int LOG_LEVEL = LOG_LEVEL_INFO;
 
 // Output log message header in this format: [type] [file:line:function] time -
 // ex: [ERROR] [somefile.cpp:123:doSome()] 2008/07/06 10:00:00 -
-    inline void OutputLogHeader(const char *file, int line, const char *func, int level) {
-        time_t t = ::time(nullptr);
-        tm *curTime = localtime(&t);  // NOLINT
-        char time_str[32];            // FIXME
-        ::strftime(time_str, 32, LOG_LOG_TIME_FORMAT, curTime);
-        const char *type;
-        switch (level) {
-            case LOG_LEVEL_ERROR:
-                type = "ERROR";
-                break;
-            case LOG_LEVEL_WARN:
-                type = "WARN ";
-                break;
-            case LOG_LEVEL_INFO:
-                type = "INFO ";
-                break;
-            case LOG_LEVEL_DEBUG:
-                type = "DEBUG";
-                break;
-            case LOG_LEVEL_TRACE:
-                type = "TRACE";
-                break;
-            default:
-                type = "UNKWN";
-        }
-        // PAVLO: DO NOT CHANGE THIS
-        ::fprintf(LOG_OUTPUT_STREAM, "%s [%s:%d:%s] %s - ", time_str, file, line, func, type);
-    }
+inline void OutputLogHeader(const char *file, int line, const char *func, int level) {
+  time_t t = ::time(nullptr);
+  tm *curTime = localtime(&t);  // NOLINT
+  char time_str[32];            // FIXME
+  ::strftime(time_str, 32, LOG_LOG_TIME_FORMAT, curTime);
+  const char *type;
+  switch (level) {
+    case LOG_LEVEL_ERROR:
+      type = "ERROR";
+      break;
+    case LOG_LEVEL_WARN:
+      type = "WARN ";
+      break;
+    case LOG_LEVEL_INFO:
+      type = "INFO ";
+      break;
+    case LOG_LEVEL_DEBUG:
+      type = "DEBUG";
+      break;
+    case LOG_LEVEL_TRACE:
+      type = "TRACE";
+      break;
+    default:
+      type = "UNKWN";
+  }
+  // PAVLO: DO NOT CHANGE THIS
+  ::fprintf(LOG_OUTPUT_STREAM, "%s [%s:%d:%s] %s - ", time_str, file, line, func, type);
+}
 
 }  // namespace newsql_kv
 
