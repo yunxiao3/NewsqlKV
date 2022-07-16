@@ -1,11 +1,13 @@
-#include "../inc/interface.h"
+#include "include/interface.h"
+#include "include/logger.h"
 #include <iostream>
 #include <vector>
 #include <string.h>
 
-class User
-{
-public:
+namespace newsql_kv {
+
+class User {
+ public:
     int64_t id;
     char user_id[128];
     char name[128];
@@ -20,7 +22,9 @@ void engine_write( void *ctx, const void *data, size_t len) {
     User user;
     memcpy(&user,data,len);
     users.push_back(user);
- }
+    LOG_INFO("# engine_write:");
+    LOG_DEBUG("# LOG_DEBUG engine_write:");
+}
 
 size_t engine_read( void *ctx, int32_t select_column,
     int32_t where_column, const void *column_key, size_t column_key_len, void *res) {
@@ -67,3 +71,5 @@ void* engine_init(const char* host_info, const char* const* peer_host_info, size
                   const char* aep_dir, const char* disk_dir) {return nullptr;}
 
 void engine_deinit(void *ctx) {}
+
+}  // namespace newsql_kv

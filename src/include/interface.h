@@ -3,6 +3,9 @@
 #include <stdint.h>
 #include <stdio.h>
 
+namespace newsql_kv {
+
+
 extern "C" {
 
 /*
@@ -46,3 +49,5 @@ void* engine_init(const char* host_info, const char* const* peer_host_info, size
 void engine_deinit(void *ctx);
 
 }
+
+}  // namespace newsql_kv

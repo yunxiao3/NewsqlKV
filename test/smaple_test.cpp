@@ -1,6 +1,12 @@
-#include "../inc/interface.h"
+#include "include/interface.h"
+
 #include <iostream>
 #include <string.h>
+
+#include "gtest/gtest.h"
+
+namespace newsql_kv {
+
 
 class TestUser
 {
@@ -13,8 +19,7 @@ public:
 
 enum TestColumn{Id=0,Userid,Name,Salary};
 
-int main()
-{
+TEST(SampleTest, SampleTest) {
     TestUser user;
     user.id = 0;
     user.salary = 100;
@@ -26,3 +31,5 @@ int main()
     std::cout<<"res:"<<*(int64_t *)res;
     engine_deinit(ctx);
 }
+
+}  // namespace newsql_kv
