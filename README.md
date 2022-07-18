@@ -60,3 +60,23 @@ buidl and run single test
 $ make smaple_test
 $ ./test/smaple_test
 ```
+
+## Docker
+
+First, make sure that you have docker installed:
+
+
+From the repository directory, run these commands to create a Docker image and container:
+
+```
+$ docker build . -t newsql_kv
+$ docker create -t -i --name newsql_kv -v $(pwd):/newsql_kv newsql_kv bash
+```
+
+This will create a Docker image and container. To run it, type:
+
+```
+$ docker start -a -i newsql_kv
+```
+
+to open a shell within the box. You can find Newsql_KV's code mounted at `/newsql_kv` and run the commands mentioned above like normal.
